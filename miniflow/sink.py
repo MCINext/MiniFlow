@@ -3,7 +3,7 @@ import pandas as pd
 from abc import ABC, abstractmethod
 from prometheus_client import Counter
 from sqlalchemy import create_engine
-from etl.utils import AppNameComponentFilter, log_df_info
+from miniflow.utils import AppNameComponentFilter, log_df_info
 import clickhouse_connect
 
 class DataSink(ABC):

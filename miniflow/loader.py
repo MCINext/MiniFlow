@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import boto3
 from io import BytesIO
 from prometheus_client import Counter
-from etl.utils import AppNameComponentFilter, log_df_info
+from miniflow.utils import AppNameComponentFilter, log_df_info
 
 class DataLoader(ABC):
     def __init__(self, app_name: str):

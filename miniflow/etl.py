@@ -1,11 +1,11 @@
-import json
 import logging
+import logging.config
 import pandas as pd
 from abc import ABC, abstractmethod
-
-from etl.loader import DataLoader
-from loader import DataSink
-from etl.utils import AppNameComponentFilter
+import yaml
+from miniflow.loader import DataLoader
+from miniflow.sink import DataSink
+from miniflow.utils import AppNameComponentFilter
 
 
 class ETL(ABC):
@@ -25,7 +25,7 @@ class ETL(ABC):
     def configure_logging(self, config_path: str = None):
         if config_path:
             with open(config_path, "r") as f:
-                config = json.load(f)
+                config = yaml.safe_load(f)
             logging.config.dictConfig(config)
         else:
             logging.basicConfig(level=logging.INFO)

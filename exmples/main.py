@@ -1,19 +1,20 @@
-from etl.etl import ETL
-from etl.loader import LocalCSVLoader
-from etl.sink import FileSink
+from miniflow.etl import ETL
+from miniflow.loader import LocalCSVLoader
+from miniflow.sink import FileSink
 
 class MyETL(ETL):
     def _transform(self, data_frames):
         transformed_data = {}
-        for name, df in data_frames.items():
-            df['transformed_column'] = df['column1'] * 2
-            transformed_data[name] = df
+        csv_data = data_frames.get('csv')
+        csv_data['transformed_column'] = csv_data['column1'] * 2
+        transformed_data['file'] = csv_data
         return transformed_data
 
 def main():
+    app_name = "MyApp"
     logging_config_path = 'logging-config.yaml'
-    loaders = {'example_loader': LocalCSVLoader()}
-    sinks = {'example_sink': FileSink()}
+    loaders = {'csv': LocalCSVLoader(app_name, 'sample.csv')}
+    sinks = {'file': FileSink(app_name, 'output.csv')}
 
     etl_process = MyETL("MyApp", loaders, sinks, logging_config_path)
     etl_process.run()
